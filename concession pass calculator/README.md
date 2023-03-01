@@ -1,4 +1,4 @@
-# SimplyGO concession pass calculator
+# SimplyGo concession pass calculator
 ## Problem Statement
 TransitLink offers 3 types of monthly concession passes to University Students and NSFs:
 - Unlimited MRT + Bus rides @ $90.50/mo
