@@ -1,0 +1,254 @@
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <!--meta name="viewport" content="width=device-width, initial-scale=1, min-width=1024"-->
+		<link rel="stylesheet" href="dash.css">
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-N28WLQWW01"></script>
+		<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());
+
+		  gtag('config', 'G-N28WLQWW01');
+		</script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="/emc/jquery-tickerTape.js"></script>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <script>
+            document.getElementsByTagName("html")[0].className = "js";
+        </script>
+    </head>
+    <body>
+	 <p class="headx">
+	 <a href="#" class="expand-one">Current Prices &darr;</a>
+	 &nbsp;&nbsp;&nbsp;
+	 EMC Data Tracking & Analytics Dashboard
+	 <span id="avgdata" style="float:right;"><i class="fa fa-refresh fa-spin fa fa-fw" style="margin-top: 4px; padding: 0; margin-right: 6px;"></i></span>
+	 </p>
+	<div id="tickerTape"></div>
+      <div class="wrapper">
+          <div class="item">
+		    <div class="iframe mloader">
+			    <iframe id="C1" src="" /></iframe>
+		    </div>
+          </div>
+        <div class="item">
+		    <div class="iframe mloader">
+			    <iframe id="C2" src="" /></iframe>
+		    </div>
+          </div>
+
+		<div class="item">
+		    <div class="iframe mloader">
+			    <iframe id="C7" src="" /></iframe>
+		    </div>
+        </div>
+		<div class="item">
+		    <div class="iframe mloader">
+			    <iframe id="C6" src="" /></iframe>
+		    </div>
+        </div>		
+      </div>
+	  </body>
+	  <div class="se-pre-con"></div>
+	  <style>
+	  
+	  </style>
+	  <script>
+	  
+	  setInterval(function updavg() {
+		fetch('/emc/day-avg.php?t='+Date.now())
+			.then(response => response.text()) 
+			.then((data) => {
+				$("#avgdata").text(data);
+			});
+		return updavg;
+		}(), 5*60*1000);
+
+	  //get avg price for day
+	  
+	  
+	  function initGrid(){
+		
+		if( ($(".iframe-content").height()*1.5) > $(".iframe-content").width()){
+							old_height = Math.floor($(".iframe-content").width()*0.66);
+							$("iframe-content").height(old_height);
+							console.log('force height to ' + old_height);
+						} else {
+							old_height = Math.floor($("#C1").height());
+						}	
+						
+		  $("#C1").delay(Math.floor(Math.random() * 50)+ 50).attr("src", "/emc/relay.php/ChartServer/blue/C1/"+Math.floor($("#C1").width())+","+old_height+"/?t="+Date.now());
+		  $("#C2").delay(Math.floor(Math.random() * 50)+ 50).attr("src", "/emc/relay.php/ChartServer/blue/C2/"+Math.floor($("#C2").width())+","+old_height+"/?t="+Date.now());
+		  $("#C7").delay(Math.floor(Math.random() * 50)+ 50).attr("src", "/emc/relay.php/ChartServer/blue/C7/"+Math.floor($("#C7").width())+","+old_height+"/?t="+Date.now());
+		  $("#C6").delay(Math.floor(Math.random() * 50)+ 50).attr("src", "/emc/relay.php/ChartServer/blue/C6/"+Math.floor($("#C6").width())+","+old_height+"/?t="+Date.now());
+	  }
+	  function clearGrid(){
+		  $("#C1").attr("src", "about:blank");
+		  $("#C2").attr("src", "about:blank");
+		  $("#C7").attr("src", "about:blank");
+		  $("#C6").attr("src", "about:blank");
+	  }
+	  $('#tickerTape').hide()
+	
+	  
+	  $('#tickerTape').tickerTape({speed:60, format:'energy', url:'/emc/relay.php/ChartServer/blue/ticker'});
+	  $(document).ready(function(){
+    $('.iframe').responsiveIframes({ openMessage: '<a class="iframe-trigger fa fa-expand"></a>', closeMessage: "" });
+	initGrid();
+	$('#tickerTape').parent().height('0');
+	setTimeout(function(){
+		$('div').find("#tickerTape .tickeritem:nth-last-child(-n+8)").remove();
+		$('.expand-one').click(function(){ 
+			if ($('#tickerTape').is(":visible")) {
+				$('#tickerTape').slideToggle('slow');
+				setTimeout(function(){$('#tickerTape').parent().height('0')}, 500); //hide
+			} else {
+				$('#tickerTape').parent().height('120');
+				$('#tickerTape').slideToggle('slow');
+				$('#tickerTape').show();
+			}
+			//$('#tickerTape').height('140px');
+		});
+	}, 2000);
+	$(".se-pre-con").fadeOut("slow");
+});
+		
+	/*	$("iframe").on("load", function () {
+			// do something once the iframe is loaded
+			$(".se-pre-con").fadeOut("slow");
+		});
+
+
+function iframeURLChange(iframe, callback) {
+    var unloadHandler = function () {
+        // Timeout needed because the URL changes immediately after
+        // the `unload` event is dispatched.
+        setTimeout(function () {
+            callback(iframe.contentWindow.location.href);
+        }, 0);
+    };
+
+    function attachUnload() {
+        // Remove the unloadHandler in case it was already attached.
+        // Otherwise, the change will be dispatched twice.
+        iframe.contentWindow.removeEventListener("unload", unloadHandler);
+        iframe.contentWindow.addEventListener("unload", unloadHandler);
+    }
+
+    iframe.addEventListener("load", attachUnload);
+    attachUnload();
+}
+
+iframeURLChange(document.getElementById("mainframe"), function (newURL) {
+    console.log("URL changed:", newURL);
+});
+*/
+
+/**
+ * jQuery Responsive IFrames
+ * @author Armin Solecki
+ * @source https://github.com/arminsolecki/responsive-iframes/
+ * Licensed under the MIT License (http://creativecommons.org/licenses/MIT/)
+ *
+ **/
+(function($){
+    $.responsiveIframes = function(el, options){
+        var self = this;
+        
+        // Access to jQuery and DOM versions of element
+        self.$el = $(el);
+        self.el = el;
+        
+        // Add a reverse reference to the DOM object
+        self.$el.data("responsiveIframes", self);
+        
+        self.init = function () {
+            self.options = $.extend({}, $.responsiveIframes.defaultOptions, options);
+
+            // wrap iframe
+            var iframeSrc = self.$el.find('iframe').wrap('<div class="iframe-content" />').attr('src');
+			iframeSrc = '#';
+			var iframeobj =  self.$el.find('iframe');
+			
+            //generate header
+            var header = '<div class="iframe-header">' +
+                              //'<a href="'+ iframeSrc +'" class="iframe-trigger">'+ self.options.openMessage +'</a>' +
+							  self.options.openMessage 
+                          '</div>';
+
+            var trigger = self.$el.prepend(header).find('.iframe-trigger');
+
+            // click event
+            $(trigger).click(function (e) {
+                e.preventDefault();
+
+                var $this = $(this),
+                    $html = $('html'),
+                    isFullScreen = $html.hasClass("iframe-full-screen"),
+                    //message = isFullScreen ? self.options.openMessage : self.options.closeMessage;
+					message = isFullScreen ? '' : self.options.closeMessage;
+
+                $this.text(message);
+
+                if (isFullScreen) {
+					self.$el.removeClass("iframe-active");
+                    $html.removeClass("iframe-full-screen"); //exit fullscreen
+                    setTimeout(function () {
+                        $(window).scrollTop($this.data('iframe-scroll-position'));
+						//iframeobj.attr("src", "/emc/relay.php/ChartServer/blue/"+iframeobj.attr('id')+"/"+iframeobj.width()+","+iframeobj.height()+"/");
+						
+                    }, 1);
+					clearGrid();
+					setTimeout(function(){
+						initGrid();
+					}, 200);
+					
+                } else {
+                    $this.data('iframe-scroll-position', $(window).scrollTop());
+					self.$el.addClass("iframe-active");
+                    $html.addClass("iframe-full-screen"); //enter fullscreen
+					//document.getElementById(iframeobj.attr('id')).setAttribute("src", "");
+					setTimeout(function(){				
+						if($('.iframe-full-screen').height() > $('.iframe-full-screen').width()){
+							new_height = $('.iframe-full-screen').width()*0.66;
+							console.log('force height to ' + new_height);
+						} else {
+							new_height = $('.iframe-full-screen').height();
+						}					
+						document.getElementById(iframeobj.attr('id')).setAttribute("src", "/emc/relay.php/ChartServer/blue/"+iframeobj.attr('id')+"/"+Math.floor(iframeobj.width())+","+new_height+"/");
+					}, 50);
+					//iframeobj.attr("src", "/emc/relay.php/ChartServer/blue/"+iframeobj.attr('id')+"/"+iframeobj.width()+","+iframeobj.height()+"/#fullscreen");
+					//alert( "/emc/relay.php/ChartServer/blue/"+iframeobj.attr('id')+"/"+iframeobj.width()+","+iframeobj.height()+"/");
+                }
+
+            });
+        };
+                
+        // Run initializer
+        self.init();
+    };
+    
+    $.responsiveIframes.defaultOptions = {
+        openMessage: "Full screen",
+        closeMessage: "Close"
+    };
+    
+    $.fn.responsiveIframes = function(options){
+        return this.each(function(){
+            (new $.responsiveIframes(this, options));
+        });
+    };
+    
+})(jQuery);
+	  </script>
+	  	<script src="https://use.fontawesome.com/e8abb22e77.js"></script>
+	  	<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400;600&display=swap" rel="stylesheet"> 
+		<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet"> 
+    </body>
+</html>
