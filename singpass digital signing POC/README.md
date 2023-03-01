@@ -13,7 +13,7 @@ node server.js
 Digital signing API on singpass is no longer accessible with the included set of credentials as they were test keys for the now closed public beta of the new Singpass (NDI)
 
 ## Screenshots:
-![1](sign-in-ndi.png)
-![2](sign-doc.png)
-![3](signresult.png)
-![4](signerror.png)
+![1](screenshots/sign-in-ndi.png)
+![2](screenshots/signdoc.png)
+![3](screenshots/signresult.png)
+![4](screenshots/signerror.png)
