@@ -1,7 +1,8 @@
-#go.vjc.sg
+# go.vjc.sg - link shorterning service
 
 [Visit Site](https://go.vjc.sg/)
-
+<br><br>
+## Screenshots
 ![Home](home.png)
-![SSO](sso.png)
-![Logged in](loggedin.png)
+![SSO](sso.jpg)
+![Logged in](loggedin.jpg)
