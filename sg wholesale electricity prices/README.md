@@ -1,7 +1,15 @@
-#go.vjc.sg/emc - 
+# Wholesale electricity price tracker
 
-[Visit Site](https://go.vjc.sg/emc)
+More info on price plan: https://www.openelectricitymarket.sg/business/purchase-options/wholesale-electricity-price
 
-![ticker](price ticker.png)
+Visit tracking site: https://go.vjc.sg/emc
+<br>
+ <br> <br>
+## Price ticker
+![ticker](price%20ticker.png)
+  <br><br><br>
+## Dashboard
 ![dashboard](dashboard.png)
-![graph](fullscreen graph.png)
+  <br><br>
+## Fullscreen graphs
+![graph](fullscreen%20graph.png)
