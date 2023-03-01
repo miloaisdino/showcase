@@ -9,7 +9,7 @@ The usage of monthly concession passes is essential for these two groups as **ad
 unlike school students or senior citizens.
 
 This offers a problem where users have to determine if their public transport usage is sufficient to make the purchase of a monthly pass worthwhile. 
-Also, buying a Bus only pass with pay-as-you-go MRT usage might be cheaper than getting the MRT + Bus pass.
+Also, buying a Bus only pass with pay-as-you-go MRT usage may be cheaper than getting the whole MRT + Bus pass.
 
 ## Solution
 This project retrieves and analyses transit info from your SimplyGo account to determine the most cost optimal course of action.
