@@ -8,7 +8,7 @@ TransitLink offers 3 types of monthly concession passes to University Students a
 The usage of monthly concession passes is essential for these two groups as **adult fares are charged for pay-as-you-go usage** 
 unlike school students or senior citizens.
 
-This offers a problem where users have to determine if their public transport usage is sufficient to make purchasing a monthly pass worthwhile. 
+This offers a problem where users have to determine if their public transport usage is sufficient to make the purchase of a monthly pass worthwhile. 
 Also, buying a Bus only pass with pay-as-you-go MRT usage might be cheaper than getting the MRT + Bus pass.
 
 ## Solution
